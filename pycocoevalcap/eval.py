@@ -37,7 +37,7 @@ class COCOEvalCap:
         self.gts  = tokenizer.tokenize(gts)
         self.res = tokenizer.tokenize(res)
 
-    def evaluate(self):
+    def evaluate(self, only_bleu=False):
         self.tokenize()
 
         # =================================================
@@ -51,6 +51,10 @@ class COCOEvalCap:
             (Cider(self.df), "CIDEr"),
             (Spice(), "SPICE")
         ]
+        if only_bleu:
+            scorers = [
+                (Bleu(4), ["Bleu_1", "Bleu_2", "Bleu_3", "Bleu_4"]),
+            ]
 
         # =================================================
         # Compute scores
